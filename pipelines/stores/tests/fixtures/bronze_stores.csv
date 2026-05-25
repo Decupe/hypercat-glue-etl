@@ -1,0 +1,14 @@
+store_id,store_name,city,region,country,postcode,opened_date,store_type
+1,Hypercat London Central,London,South East,England,EC1A 1BB,2018-03-15,Flagship
+2,Hypercat Manchester,Manchester,North West,England,M1 1AE,2019-06-01,Standard
+3,Hypercat Birmingham,Birmingham,West Midlands,England,B1 1BB,2019-09-15,Standard
+4,Hypercat Glasgow,Glasgow,Scotland,Scotland,G1 1AA,2020-01-10,Standard
+5,Hypercat Bristol,Bristol,South West,England,BS1 1AA,2020-08-20,Standard
+6,Hypercat Leeds,Leeds,Yorkshire,England,LS1 1AA,2021-02-14,Standard
+7,Hypercat Edinburgh,Edinburgh,Scotland,Scotland,EH1 1AA,2021-07-01,Standard
+8,  Hypercat Cardiff  ,Cardiff,Wales,wales,CF1 1AA,2022-03-01,standard
+9,Hypercat Newcastle,Newcastle,North East,England,NE1 1AA,2022-09-01,Standard
+10,Hypercat Liverpool,Liverpool,North West,England,L1 1AA,2023-01-15,Express
+,Hypercat Ghost,London,South East,England,EC1A 1BC,2023-03-01,Standard
+11,Hypercat Dublin,Dublin,Leinster,Ireland,D1 1AA,2023-06-01,Standard
+11,Hypercat Dublin,Dublin,Leinster,Ireland,D1 1AA,2023-06-01,Standard

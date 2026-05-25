@@ -1,0 +1,17 @@
+product_id,sku,product_name,category,unit_price,stock_qty,supplier,created_at,updated_at
+1,LP-001,Laptop Pro 15,Electronics,1299.99,50,TechSupply,2024-01-01,2024-06-01
+2,WM-002,Wireless Mouse,Electronics,49.99,200,MouseCo,2024-01-02,2024-06-01
+3,BS-003,  USB-C Hub  ,electronics,89.99,150,HubWorld,2024-01-03,2024-06-01
+4,MN-004,Bluetooth Speaker,Electronics,129.99,75,SoundCo,2024-01-04,2024-06-01
+5,WC-005,4K Webcam,Electronics,59.99,30,CamSupply,2024-01-05,2024-06-01
+6,KY-006,Mechanical Keyboard,Electronics,149.99,45,KeyboardCo,2024-01-06,2024-06-01
+7,MO-007,Gaming Mouse,gaming,59.99,120,GamingSupply,2024-01-07,2024-06-01
+8,HD-008,External SSD 1TB,Electronics,89.99,200,StorageCo,2024-01-08,2024-06-01
+9,WB-009,Webcam HD,Electronics,79.99,60,CamWorld,2024-01-09,2024-06-01
+10,HB-010,USB Hub 7-Port,Electronics,39.99,300,HubCo,2024-01-10,2024-06-01
+11,SP-011,  Smart Speaker  ,electronics,99.99,80,AudioCo,2024-01-11,2024-06-01
+12,TB-012,Tablet Stand,Electronics,29.99,400,StandCo,2024-01-12,2024-06-01
+13,CH-013,Phone Charger,Electronics,-5.00,500,ChargeCo,2024-01-13,2024-06-01
+,GH-014,Ghost Product,Electronics,19.99,100,GhostCo,2024-01-14,2024-06-01
+15,DU-015,Duplicate Item,Electronics,34.99,150,DupCo,2024-01-15,2024-06-01
+15,DU-015,Duplicate Item,Electronics,34.99,150,DupCo,2024-01-15,2024-06-01

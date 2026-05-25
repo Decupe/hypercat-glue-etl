@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+./shared/__init__.py
+./shared/s3_utils.py
+./shared/spark_session.py
+shared.egg-info/PKG-INFO
+shared.egg-info/SOURCES.txt
+shared.egg-info/dependency_links.txt
+shared.egg-info/top_level.txt

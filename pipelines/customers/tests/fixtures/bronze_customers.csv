@@ -1,0 +1,24 @@
+customer_id,first_name,last_name,email,country,created_at
+1,Alice,Johnson,alice@email.com,UK,2024-01-01
+2,Bob,Smith,bob@email.com,USA,2024-01-02
+3,Carol,White,carol@email.com,Canada,2024-01-03
+4,David,Brown,david@email.com,UK,2024-01-04
+5,Emma,Wilson,emma@email.com,Australia,2024-01-05
+6,Frank,Jones,frank@email.com,UK,2024-01-06
+7,Grace,Miller,grace@email.com,USA,2024-01-07
+8,Henry,Davis,henry@email.com,Canada,2024-01-08
+9,Isabel,Moore,isabel@email.com,UK,2024-01-09
+10,James,Taylor,james@email.com,Australia,2024-01-10
+11,  Karen  ,Hall,karen@email.com,uk,2024-01-11
+12,Leo,Young,leo@email.com,USA,2024-01-12
+13,Mary,King,mary@email.com,Canada,2024-01-13
+14,Nick,Wright,nick@email.com,UK,2024-01-14
+15,Olivia,Scott,olivia@email.com,Australia,2024-01-15
+16,Paul,Green,paul@email.com,USA,2024-01-16
+17,Quinn,Baker,quinn@email.com,UK,2024-01-17
+18,Rachel,Adams,rachel@email.com,Canada,2024-01-18
+19,Steve,Nelson,steve@email.com,UK,2024-01-19
+20,Tina,Carter,tina@email.com,USA,2024-01-20
+,Ghost,User,ghost@email.com,UK,2024-01-21
+21,Duplicate,User,dup@email.com,UK,2024-01-22
+21,Duplicate,User,dup@email.com,UK,2024-01-22
