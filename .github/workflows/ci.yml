@@ -1,0 +1,158 @@
+name: Hypercat Glue ETL — CI/CD
+
+on:
+  push:
+    branches: [ develop, staging, main ]
+  pull_request:
+    branches: [ develop, staging, main ]
+
+env:
+  PYTHON_VERSION: "3.11"
+  PYSPARK_PYTHON: python
+  PYSPARK_DRIVER_PYTHON: python
+
+jobs:
+
+  # ── Job 1: Lint ──────────────────────────────────────
+  lint:
+    name: Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run flake8
+        run: |
+          flake8 pipelines/ shared/ \
+            --max-line-length=100 \
+            --exclude=__pycache__,venv \
+            --ignore=E501,W503
+
+  # ── Job 2: Unit + DQ Tests ───────────────────────────
+  unit-tests:
+    name: Unit + Data Quality Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run unit tests
+        run: |
+          pytest pipelines/customers/tests/test_unit.py \
+                 pipelines/stores/tests/test_unit.py \
+                 pipelines/products/tests/test_unit.py \
+                 pipelines/orders/tests/test_unit.py \
+                 pipelines/order_items/tests/test_unit.py \
+                 -v --tb=short
+
+      - name: Run data quality tests
+        run: |
+          pytest pipelines/customers/tests/test_data_quality.py \
+                 pipelines/stores/tests/test_data_quality.py \
+                 pipelines/products/tests/test_data_quality.py \
+                 pipelines/orders/tests/test_data_quality.py \
+                 pipelines/order_items/tests/test_data_quality.py \
+                 -v --tb=short
+
+  # ── Job 3: Integration Tests ─────────────────────────
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run integration tests
+        run: |
+          pytest pipelines/customers/tests/test_integration.py \
+                 pipelines/stores/tests/test_integration.py \
+                 pipelines/products/tests/test_integration.py \
+                 pipelines/orders/tests/test_integration.py \
+                 pipelines/order_items/tests/test_integration.py \
+                 -v --tb=short
+
+      - name: Coverage report
+        run: |
+          pytest pipelines/ \
+            --cov=pipelines \
+            --cov-report=term-missing \
+            --cov-fail-under=80 \
+            -q
+
+  # ── Job 4: Deploy to S3 (main branch only) ───────────
+  deploy:
+    name: Deploy Jobs to S3
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Upload job scripts to S3
+        run: |
+          for pipeline in customers stores products orders order_items; do
+            aws s3 cp pipelines/$pipeline/job.py \
+              s3://hypercat-data-lake-dev/glue-scripts/$pipeline/job.py
+
+            aws s3 cp pipelines/$pipeline/transform.py \
+              s3://hypercat-data-lake-dev/glue-scripts/$pipeline/transform.py
+          done
+
+      - name: Confirm deployment
+        run: |
+          echo "Deployed scripts:"
+          aws s3 ls s3://hypercat-data-lake-dev/glue-scripts/ --recursive
