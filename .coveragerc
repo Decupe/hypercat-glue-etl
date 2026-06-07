@@ -4,6 +4,7 @@ omit =
     */job.py
     */tests/*
     */__init__.py
+    */conftest.py
 
 [report]
 fail_under = 80
