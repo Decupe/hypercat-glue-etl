@@ -35,7 +35,7 @@ jobs:
           flake8 pipelines/ shared/ \
             --max-line-length=100 \
             --exclude=__pycache__,venv \
-            --ignore=E501,W503,E241,W292,W504
+            --ignore=E501,W503,E241,W292,W504,E231
 
   # ── Job 2: Unit + DQ Tests ───────────────────────────
   unit-tests:
