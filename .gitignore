@@ -1,0 +1,26 @@
+cat > .gitignore << 'EOF'
+# Python
+.coverage
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Virtual environment
+venv/
+
+# Environment file
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Hadoop
+hadoop.dll
+winutils.exe
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
