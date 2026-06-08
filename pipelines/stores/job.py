@@ -4,7 +4,7 @@ from awsglue.utils import getResolvedOptions
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.context import SparkContext
-from pipelines.stores.transform import transform_stores
+from transform import transform_stores
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
