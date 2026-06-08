@@ -28,7 +28,7 @@ SILVER_PATH = f"s3://{args['silver_bucket']}/{args['silver_prefix']}"
 
 
 def run():
-    logger.info(f"Customers job started")
+    logger.info("Customers job started")
     logger.info(f"Reading from: {BRONZE_PATH}")
 
     bronze_df = (

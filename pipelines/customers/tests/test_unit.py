@@ -1,4 +1,3 @@
-import pytest
 from pipelines.customers.transform import transform_customers
 
 
