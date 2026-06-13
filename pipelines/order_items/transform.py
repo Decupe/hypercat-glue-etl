@@ -4,20 +4,6 @@ from pyspark.sql.types import DecimalType
 
 
 def transform_order_items(df: DataFrame) -> DataFrame:
-    """
-    Silver transformation for order_items table.
-    - Remove duplicate order_item_ids
-    - Drop rows where order_item_id is null
-    - Drop rows where order_id is null
-    - Cast order_item_id to integer
-    - Cast order_id to integer
-    - Cast product_id to integer
-    - Cast quantity to integer
-    - Cast unit_price to decimal(10,2)
-    - Cast discount_pct to decimal(10,2)
-    - Drop rows where unit_price <= 0
-    - Drop rows where quantity <= 0
-    """
     return (
         df
         .dropDuplicates(["order_item_id"])
