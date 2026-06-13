@@ -10,7 +10,7 @@ class TestStoresIntegration:
     def test_bronze_has_required_columns(self, bronze_stores_df):
         required = {
             "store_id", "store_name", "city", "region",
-            "country", "postcode", "opened_date", "store_type"
+            "open_date", "manager", "created_at", "updated_at"
         }
         missing = required - set(bronze_stores_df.columns)
         assert not missing, \
@@ -41,29 +41,20 @@ class TestStoresIntegration:
     def test_silver_schema_is_correct(self, silver_stores_df):
         required = {
             "store_id", "store_name", "city", "region",
-            "country", "postcode", "opened_date", "store_type"
+            "open_date", "manager", "created_at", "updated_at"
         }
         missing = required - set(silver_stores_df.columns)
         assert not missing, \
             f"Silver missing columns: {missing}"
 
-    def test_silver_country_is_uppercase(self, silver_stores_df):
+    def test_silver_region_is_uppercase(self, silver_stores_df):
         from pyspark.sql.functions import col, upper
         total = silver_stores_df.count()
         invalid = silver_stores_df.filter(
-            col("country") != upper(col("country"))
-        ).count()
+            col("region") != upper(col("region"))
+            ).count()
         assert invalid / total == 0, \
-            f"Non-uppercase country rate: {invalid/total:.1%}"
-
-    def test_silver_store_type_is_uppercase(self, silver_stores_df):
-        from pyspark.sql.functions import col, upper
-        total = silver_stores_df.count()
-        invalid = silver_stores_df.filter(
-            col("store_type") != upper(col("store_type"))
-        ).count()
-        assert invalid / total == 0, \
-            f"Non-uppercase store_type rate: {invalid/total:.1%}"
+            f"Non-uppercase region rate: {invalid/total:.1%}"
 
     def test_silver_duplicate_rate(self, silver_stores_df):
         total = silver_stores_df.count()

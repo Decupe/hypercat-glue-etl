@@ -7,13 +7,10 @@ def transform_orders(df: DataFrame) -> DataFrame:
     """
     Silver transformation for orders table.
     - Remove duplicate order_ids
-    - Drop rows where order_id is null
-    - Drop rows where customer_id is null
-    - Trim whitespace from status and payment_method
-    - Uppercase status
-    - Cast order_id to integer
-    - Cast customer_id to integer
-    - Cast store_id to integer
+    - Drop rows where order_id or customer_id is null
+    - Uppercase and trim status
+    - Trim payment_method
+    - Cast order_id, customer_id, store_id to integer
     - Cast discount_pct to decimal(10,2)
     """
     return (
