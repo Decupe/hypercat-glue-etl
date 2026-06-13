@@ -1,5 +1,4 @@
 from pyspark.sql.functions import col, upper, trim
-from pipelines.stores.transform import transform_stores
 
 
 class TestStoresDataQuality:

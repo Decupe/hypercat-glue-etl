@@ -1,5 +1,3 @@
-import re
-import pytest
 from pyspark.sql.functions import col, upper, trim
 
 
