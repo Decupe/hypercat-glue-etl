@@ -10,14 +10,14 @@ from pipelines.stores.transform import transform_stores
 @pytest.fixture
 def store_schema():
     return StructType([
-        StructField("store_id",    StringType(), True),
-        StructField("store_name",  StringType(), True),
-        StructField("city",        StringType(), True),
-        StructField("region",      StringType(), True),
-        StructField("country",     StringType(), True),
-        StructField("postcode",    StringType(), True),
-        StructField("opened_date", StringType(), True),
-        StructField("store_type",  StringType(), True),
+        StructField("store_id",   StringType(), True),
+        StructField("store_name", StringType(), True),
+        StructField("region",     StringType(), True),
+        StructField("city",       StringType(), True),
+        StructField("open_date",  StringType(), True),
+        StructField("manager",    StringType(), True),
+        StructField("created_at", StringType(), True),
+        StructField("updated_at", StringType(), True),
     ])
 
 
@@ -25,13 +25,12 @@ def store_schema():
 @pytest.fixture
 def raw_store_data(spark, store_schema):
     data = [
-        ("1", "  Hypercat London  ", "London",      "South East",   "england",  "EC1A 1BB", "2018-03-15", "flagship"),
-        ("2", "Hypercat Manchester", "Manchester",   "North West",   "England",  "M1 1AE",   "2019-06-01", "Standard"),
-        ("2", "Hypercat Manchester", "Manchester",   "North West",   "England",  "M1 1AE",   "2019-06-01", "Standard"),  # duplicate
-        ("3", "Hypercat Birmingham", "  Birmingham", "West Midlands","England",  "B1 1BB",   "2019-09-15", "Standard"),
-        (None,"Hypercat Glasgow",    "Glasgow",      "Scotland",     "Scotland", "G1 1AA",   "2020-01-10", "Standard"),  # null id
-        ("4", None,                  "Bristol",      "South West",   "England",  "BS1 1AA",  "2020-08-20", "Standard"),  # null name
-        ("5", "Hypercat Leeds",      "Leeds",        "Yorkshire",    "england",  "LS1 1AA",  "2021-02-14", "standard"),
+        ("1",  "  Oxford St  ", "north", "London",     "01/01/2020", "John Smith",  "2024-01-01", "2024-01-01"),
+        ("2",  "Westfield",     "SOUTH", "Manchester",  "02/01/2020", "Jane Doe",    "2024-01-02", "2024-01-02"),
+        ("2",  "Westfield",     "SOUTH", "Manchester",  "02/01/2020", "Jane Doe",    "2024-01-02", "2024-01-02"),
+        ("3",  None,            "EAST",  "Birmingham",  "03/01/2020", "Bob Brown",   "2024-01-03", "2024-01-03"),
+        (None, "Leeds Central", "WEST",  "Leeds",       "04/01/2020", "Alice Jones", "2024-01-04", "2024-01-04"),
+        ("4",  "  Cardiff  ",   "east",  "Cardiff",     "05/01/2020", "Mike Wilson", "2024-01-05", "2024-01-05"),
     ]
     return spark.createDataFrame(data, schema=store_schema)
 
@@ -40,14 +39,16 @@ def raw_store_data(spark, store_schema):
 @pytest.fixture
 def clean_store_data(spark, store_schema):
     data = [
-        ("1", "Hypercat London Central", "London",     "South East",   "England",  "EC1A 1BB", "2018-03-15", "Flagship"),
-        ("2", "Hypercat Manchester",     "Manchester",  "North West",   "England",  "M1 1AE",   "2019-06-01", "Standard"),
-        ("3", "Hypercat Birmingham",     "Birmingham",  "West Midlands","England",  "B1 1BB",   "2019-09-15", "Standard"),
-        ("4", "Hypercat Glasgow",        "Glasgow",     "Scotland",     "Scotland", "G1 1AA",   "2020-01-10", "Standard"),
-        ("5", "Hypercat Bristol",        "Bristol",     "South West",   "England",  "BS1 1AA",  "2020-08-20", "Standard"),
-        ("6", "Hypercat Leeds",          "Leeds",       "Yorkshire",    "England",  "LS1 1AA",  "2021-02-14", "Standard"),
-        ("7", "Hypercat Edinburgh",      "Edinburgh",   "Scotland",     "Scotland", "EH1 1AA",  "2021-07-01", "Standard"),
-        ("8", "Hypercat Cardiff",        "Cardiff",     "Wales",        "Wales",    "CF1 1AA",  "2022-03-01", "Standard"),
+        ("1",  "Oxford Street",   "NORTH", "London",     "01/01/2020", "John Smith",  "2024-01-01", "2024-01-01"),
+        ("2",  "Westfield",       "SOUTH", "Manchester",  "02/01/2020", "Jane Doe",    "2024-01-02", "2024-01-02"),
+        ("3",  "Bullring",        "EAST",  "Birmingham",  "03/01/2020", "Bob Brown",   "2024-01-03", "2024-01-03"),
+        ("4",  "Cardiff Bay",     "WEST",  "Cardiff",     "04/01/2020", "Alice Jones", "2024-01-04", "2024-01-04"),
+        ("5",  "Leeds Central",   "NORTH", "Leeds",       "05/01/2020", "Mike Wilson", "2024-01-05", "2024-01-05"),
+        ("6",  "Glasgow Fort",    "NORTH", "Glasgow",     "06/01/2020", "Sarah Davis", "2024-01-06", "2024-01-06"),
+        ("7",  "Bluewater",       "SOUTH", "Kent",        "07/01/2020", "Tom Clark",   "2024-01-07", "2024-01-07"),
+        ("8",  "Meadowhall",      "NORTH", "Sheffield",   "08/01/2020", "Lucy Evans",  "2024-01-08", "2024-01-08"),
+        ("9",  "Trafford Centre", "NORTH", "Manchester",  "09/01/2020", "James White", "2024-01-09", "2024-01-09"),
+        ("10", "Lakeside",        "SOUTH", "Essex",       "10/01/2020", "Emma Harris", "2024-01-10", "2024-01-10"),
     ]
     return spark.createDataFrame(data, schema=store_schema)
 
